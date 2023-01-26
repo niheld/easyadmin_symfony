@@ -3,11 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Product;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -24,7 +27,9 @@ class ProductCrudController extends AbstractCrudController
             TextField::new('description'),
             NumberField::new('price'),
             BooleanField::new('status'),
-            AssociationField::new('category')
+            AssociationField::new('category'),
+            TextareaField::new('imageFile')
+                ->setFormType(VichImageType::class)
         ];
     }
     
