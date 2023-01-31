@@ -7,10 +7,31 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @ApiResource(
+ *      formats={"json"},
+ *      normalizationContext={"groups"={"productList"}},
+ *      denormalizationContext={"groups"={"productCreate"}}
+ * )
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *          "category.label": "partial",
+ *     }
+ * )
+ * @ApiFilter(
+ *     BooleanFilter::class,
+ *     properties={
+ *          "status"
+ *     }
+ * )
  * @Vich\Uploadable
  */
 class Product
@@ -19,26 +40,31 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"productList"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"productList","productCreate"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"productList","productCreate"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"productList","productCreate"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"productList","productCreate"})
      */
     private $status;
 
