@@ -40,41 +40,43 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"productList"})
+     * @Groups({"productList","categoryList"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"productList","productCreate"})
+     * @Groups({"productList","productCreate","categoryList"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"productList","productCreate"})
+     * @Groups({"productList","productCreate","categoryList"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"productList","productCreate"})
+     * @Groups({"productList","productCreate","categoryList"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"productList","productCreate"})
+     * @Groups({"productList","productCreate","categoryList"})
      */
     private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
+     * @Groups({"productList","productCreate"})
      */
     private $category;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"productList","productCreate","categoryList"})
      * @var string
      */
     private $image;
