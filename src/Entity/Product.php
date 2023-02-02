@@ -15,7 +15,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
- * @ApiResource(
+ * @ApiResource(attributes={"pagination_enabled"=false},
+ *     collectionOperations={
+ *         "get",
+ *         "post"={"security"="is_granted('ROLE_ADMIN')"},
+ *          
+ *     },
+ *     itemOperations={
+ *         "get",
+ *         "put"={"security_post_denormalize"="is_granted('ROLE_ADMIN')"},
+ *         "delete"={"security_post_denormalize"="is_granted('ROLE_ADMIN')"},
+ *     },
  *      formats={"json"},
  *      normalizationContext={"groups"={"productList"}},
  *      denormalizationContext={"groups"={"productCreate"}}
